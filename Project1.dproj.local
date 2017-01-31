@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2017.01.31 22:06:48.409,=C:\Users\drty\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2017.01.31 22:30:51.818,D:\NDPVKClient\Unit1.dfm=C:\Users\drty\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2017.01.31 22:30:51.818,D:\NDPVKClient\Unit1.pas=C:\Users\drty\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2017.01.31 22:30:53.853,D:\NDPVKClient\Project1.dproj=C:\Users\drty\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
