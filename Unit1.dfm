@@ -14,6 +14,7 @@ object Form1: TForm1
   Font.Style = []
   Menu = mm1
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object spgcntrl1: TsPageControl
@@ -64,6 +65,29 @@ object Form1: TForm1
         Width = 3
         Height = 13
       end
+      object lbl4: TsLabel
+        Left = 40
+        Top = 88
+        Width = 117
+        Height = 23
+        Caption = #1053#1045#1058' '#1040#1042#1040#1058#1040#1056#1040
+        ParentFont = False
+        Visible = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Tahoma'
+        Font.Style = []
+      end
+      object btn1: TsButton
+        Left = 724
+        Top = 3
+        Width = 75
+        Height = 25
+        Caption = #1054#1073#1085#1086#1074#1080#1090#1100
+        TabOrder = 0
+        OnClick = btn1Click
+      end
     end
     object stbsht2: TsTabSheet
       Caption = #1053#1086#1074#1086#1089#1090#1080
@@ -109,7 +133,6 @@ object Form1: TForm1
       Caption = #1040#1082#1082#1072#1091#1085#1090
       object N3: TMenuItem
         Caption = #1042#1086#1081#1090#1080
-        OnClick = N3Click
       end
       object N4: TMenuItem
         Caption = #1042#1099#1081#1090#1080
@@ -136,5 +159,33 @@ object Form1: TForm1
         Caption = #1063#1072#1042#1054
       end
     end
+  end
+  object idhtp1: TIdHTTP
+    IOHandler = idslhndlrscktpnsl1
+    AllowCookies = True
+    ProxyParams.BasicAuthentication = False
+    ProxyParams.ProxyPort = 0
+    Request.ContentLength = -1
+    Request.ContentRangeEnd = -1
+    Request.ContentRangeStart = -1
+    Request.ContentRangeInstanceLength = -1
+    Request.Accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    Request.BasicAuthentication = False
+    Request.UserAgent = 'Mozilla/3.0 (compatible; Indy Library)'
+    Request.Ranges.Units = 'bytes'
+    Request.Ranges = <>
+    HTTPOptions = [hoForceEncodeParams]
+    Left = 580
+    Top = 232
+  end
+  object idslhndlrscktpnsl1: TIdSSLIOHandlerSocketOpenSSL
+    MaxLineAction = maException
+    Port = 0
+    DefaultPort = 0
+    SSLOptions.Mode = sslmUnassigned
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    Left = 676
+    Top = 240
   end
 end

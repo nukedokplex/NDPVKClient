@@ -5,7 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, sPageControl, sSkinManager,
-  Vcl.Menus, Vcl.StdCtrls, sLabel, Vcl.ExtCtrls, acImage, Unit2, System.IniFiles, Unit3, System.JSON;
+  Vcl.Menus, Vcl.StdCtrls, sLabel, Vcl.ExtCtrls, acImage, Unit2, System.IniFiles, Unit3, System.JSON,
+  sButton, IdIOHandler, IdIOHandlerSocket, IdIOHandlerStack, IdSSL,
+  IdSSLOpenSSL, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
+  IdHTTP;
 const
   client_id='5850365';
   v='5.62';
@@ -32,7 +35,12 @@ type
     N7: TMenuItem;
     N8: TMenuItem;
     N9: TMenuItem;
-    procedure N3Click(Sender: TObject);
+    btn1: TsButton;
+    lbl4: TsLabel;
+    idhtp1: TIdHTTP;
+    idslhndlrscktpnsl1: TIdSSLIOHandlerSocketOpenSSL;
+    procedure btn1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,6 +52,7 @@ var
   token,uid,email:string;
   fini:TIniFile;
   profileInfoCaller:caller;
+  avatarCaller:caller;
 
 implementation
 
@@ -54,6 +63,35 @@ begin
   Result.url:=url;
   Result.FreeOnTerminate:=True;
   Result.Priority:=priority;
+end;
+procedure OnGetAvatar(response:string);
+var
+  jsob:TJSONObject;
+  jsap:TJSONPair;
+  jsar:TJSONArray;
+  stream:TMemoryStream;
+begin
+Form1.lbl4.Visible:=False;
+  jsob:=TJSONObject(TJSONObject.ParseJSONValue(response));
+  jsap:=jsob.Get('response');
+  jsar:=jsap.JsonValue as TJSONArray;
+  jsob:=jsar.Items[0] as TJSONObject;
+  jsap:=jsob.Get('has_photo');
+  if jsap.JsonValue.Value = '1' then begin
+      try
+      jsap:=jsob.Get('photo_200');
+      stream:=TMemoryStream.Create;
+      Form1.idhtp1.Get(jsap.JsonValue.Value, stream);
+      stream.SaveToFile(ExtractFileDir(Application.ExeName)+'/photo_cache/avatar_'+uid+'.jpg');
+      stream.Free;
+      Form1.img1.Picture.LoadFromFile(ExtractFileDir(Application.ExeName)+'/photo_cache/avatar_'+uid+'.jpg');
+      except
+        ShowMessage('Не получилось загрузить аватар, попробуйте еще раз...');
+      end;
+  end
+  else begin
+     Form1.lbl4.Visible:=True;
+  end;
 end;
 procedure OnGetProfileInfo(response:string);
 var
@@ -72,6 +110,9 @@ begin
   Form1.lbl2.Caption:=jsap.JsonValue.Value;
   jsap:=jsob.Get('status');
   Form1.lbl3.Caption:=jsap.JsonValue.Value;
+  avatarCaller:=CreateCaller('https://api.vk.com/method/users.get?access_token='+token+'&user_ids='+uid+'&fields=photo_200,has_photo&v='+v+'&name_case=nom', tpLower);
+  avatarCaller.OnHaltProc:=OnGetAvatar;
+  avatarCaller.Start
 end;
 procedure OnLogIn();
 begin
@@ -80,14 +121,18 @@ begin
  profileInfoCaller.Start;
 end;                            //0c3196d6dca40668e5acb320e656d8b010797193c10a4a824b8efe35b1413c350f3a41d9a961c384b43ff
 
-procedure TForm1.N3Click(Sender: TObject);
+procedure TForm1.btn1Click(Sender: TObject);
 begin
-Application.CreateForm(TForm2,form2);
-form2.Visible:=True;
-  form2.wb1.Navigate('https://oauth.vk.com/authorize?client_id='+client_id+'&scope='+scope+'&v='+v+'&response_type=token&display=popup');
+onlogin;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
   fini:=TIniFile.Create(ExtractFileDir(Application.ExeName)+'/account_details.ini');
   token:=fini.ReadString('account', 'token', 'no_token');
   uid:=fini.ReadString('account', 'user_id', 'no_uid');
+  if DirectoryExists(ExtractFileDir(Application.ExeName)+'/photo_cache')=false then
+  CreateDir(ExtractFileDir(Application.ExeName)+'/photo_cache');
 end;
 
 end.
