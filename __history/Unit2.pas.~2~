@@ -39,25 +39,14 @@ end;
 
 procedure TForm2.wb1NavigateComplete2(ASender: TObject; const pDisp: IDispatch;
   const URL: OleVariant);
-  var
-    a,b:Integer;
 begin
 edt1.Text:=URL;
-if Copy(url, 1, 45) = 'https://oauth.vk.com/blank.html#access_token=' then begin
+if Copy(url, 1, 45) = 'https://oauth.vk.com/blank.html#access_token=' then begin beep;
   token:=Copy(url, 46, 85) ;
-   a:=Pos('&user_id=',url)+9;
-   b:=Pos('&email=',url);
-  uid:=Copy(url, a, b-a);
-  a:=Pos('&email=',url)+7;
-  email:=Copy(url, a, length(url)-a+1);
-  fini.WriteString('account', 'token', token);
-  fini.WriteString('account', 'user_id', uid);
-  Form2.Hide;
-  wb1.Navigate('about:blank');
+
 end;
 
 
-end;                                                                                                                        //                           a        b
-//https://oauth.vk.com/blank.html#access_token=5393d790839be2412c4d951f8b8600587a1b2208f3eb7307184f51ca60508fec214ddae337092e6a82012&expires_in=0&user_id=244181731&email=admin@nuke-dev.pw
+end;
+//https://oauth.vk.com/blank.html#access_token=533bacf01e11f55b536a565b57531ad114461ae8736d6506a3&expires_in=86400&user_id=8492&state=123456
 end.
-//uid - 144

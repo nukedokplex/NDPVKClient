@@ -70,6 +70,8 @@ object Form1: TForm1
     end
     object stbsht3: TsTabSheet
       Caption = #1057#1086#1086#1073#1097#1077#1085#1080#1103
+      ExplicitLeft = 8
+      ExplicitTop = 28
     end
   end
   object sknmngr1: TsSkinManager
