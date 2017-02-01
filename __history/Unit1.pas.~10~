@@ -99,7 +99,6 @@ var
   jsob:TJSONObject;
   jsap:TJSONPair;
   jsar:TJSONArray;
-  x:string;
 begin
   jsob:=TJSONObject(TJSONObject.ParseJSONValue(response));
   jsap:=jsob.Get('response');
@@ -112,27 +111,6 @@ begin
   Form1.lbl2.Caption:=jsap.JsonValue.Value;
   jsap:=jsob.Get('status');
   Form1.lbl3.Caption:=jsap.JsonValue.Value;
-  jsap:=jsob.Get('sex');
-  //x:=jsap.JsonValue.Value ;
-  case x of
-  '0':Form1.lv1.Items[0].SubItems.Add('Не указано');
-  '1':Form1.lv1.Items[0].SubItems.Add('Женский');
-  '2':Form1.lv1.Items[0].SubItems.Add('Мужской');
-  end;
-  jsap:=jsob.Get('relation');
- // x:=jsap.JsonValue.Value ;
-  case x of
-  '0':Form1.lv1.Items[1].SubItems.Add('Не указано');
-  '1':Form1.lv1.Items[1].SubItems.Add('Не женат/Не замужем');
-  '2':Form1.lv1.Items[1].SubItems.Add('Есть друг/Есть подруга');
-  '3':Form1.lv1.Items[1].SubItems.Add('Помолвлен/Помолвлена');
-  '4':Form1.lv1.Items[1].SubItems.Add('Женат/Замужем');
-  '5':Form1.lv1.Items[1].SubItems.Add('Всё сложно');
-  '6':Form1.lv1.Items[1].SubItems.Add('В активном поиске');
-  '7':Form1.lv1.Items[1].SubItems.Add('Влюблён/Влюблена');
-  '8':Form1.lv1.Items[1].SubItems.Add('В гражданском браке');
-  end;
-
   avatarCaller:=CreateCaller('https://api.vk.com/method/users.get?access_token='+token+'&user_ids='+uid+'&fields=photo_200,has_photo&v='+v+'&name_case=nom', tpLower);
   avatarCaller.OnHaltProc:=OnGetAvatar;
   avatarCaller.Start

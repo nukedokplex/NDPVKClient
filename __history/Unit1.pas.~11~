@@ -99,7 +99,6 @@ var
   jsob:TJSONObject;
   jsap:TJSONPair;
   jsar:TJSONArray;
-  x:string;
 begin
   jsob:=TJSONObject(TJSONObject.ParseJSONValue(response));
   jsap:=jsob.Get('response');
@@ -113,15 +112,13 @@ begin
   jsap:=jsob.Get('status');
   Form1.lbl3.Caption:=jsap.JsonValue.Value;
   jsap:=jsob.Get('sex');
-  //x:=jsap.JsonValue.Value ;
-  case x of
+  case jsap.JsonValue.Value of
   '0':Form1.lv1.Items[0].SubItems.Add('Не указано');
   '1':Form1.lv1.Items[0].SubItems.Add('Женский');
   '2':Form1.lv1.Items[0].SubItems.Add('Мужской');
   end;
   jsap:=jsob.Get('relation');
- // x:=jsap.JsonValue.Value ;
-  case x of
+  case jsap.JsonValue.Value of
   '0':Form1.lv1.Items[1].SubItems.Add('Не указано');
   '1':Form1.lv1.Items[1].SubItems.Add('Не женат/Не замужем');
   '2':Form1.lv1.Items[1].SubItems.Add('Есть друг/Есть подруга');
