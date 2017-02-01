@@ -54,6 +54,7 @@ if Copy(url, 1, 45) = 'https://oauth.vk.com/blank.html#access_token=' then begin
   fini.WriteString('account', 'user_id', uid);
   Form2.Hide;
   wb1.Navigate('about:blank');
+  onlogin;
 end;
 
 
