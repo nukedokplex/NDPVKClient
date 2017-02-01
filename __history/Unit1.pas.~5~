@@ -8,7 +8,7 @@ uses
   Vcl.Menus, Vcl.StdCtrls, sLabel, Vcl.ExtCtrls, acImage, Unit2, System.IniFiles;
 const
   client_id='5850365';
-  v='5.62';
+  v='5.60';
   scope='friends,photos,audio,video,status,messages,wall,docs,groups,notifications,email,offline';
 type
   TForm1 = class(TForm)
