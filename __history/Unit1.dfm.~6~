@@ -27,8 +27,6 @@ object Form1: TForm1
     TabOrder = 0
     object stbsht1: TsTabSheet
       Caption = #1055#1088#1086#1092#1080#1083#1100
-      ExplicitLeft = 8
-      ExplicitTop = 28
       object img1: TsImage
         Left = 0
         Top = 0
@@ -90,44 +88,6 @@ object Form1: TForm1
         TabOrder = 0
         OnClick = btn1Click
       end
-      object lv1: TsListView
-        Left = 3
-        Top = 224
-        Width = 799
-        Height = 241
-        Columns = <
-          item
-            Caption = #1055#1072#1088#1072#1084#1077#1090#1088
-            Width = 169
-          end
-          item
-            Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103
-            Width = 626
-          end>
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        Items.ItemData = {
-          05B00100000900000000000000FFFFFFFFFFFFFFFF00000000FFFFFFFF000000
-          00031F043E043B0400000000FFFFFFFFFFFFFFFF00000000FFFFFFFF00000000
-          12210435043C04350439043D043E04350420003F043E043B043E04360435043D
-          043804350400000000FFFFFFFFFFFFFFFF00000000FFFFFFFF00000000071F04
-          3004400442043D043504400400000000FFFFFFFFFFFFFFFF00000000FFFFFFFF
-          000000000A12043B044E0431043B0435043D0428003004290000000000FFFFFF
-          FFFFFFFFFF00000000FFFFFFFF000000000D1404300442043004200040043E04
-          3604340435043D0438044F0400000000FFFFFFFFFFFFFFFF00000000FFFFFFFF
-          000000000C20043E0434043D043E043904200033043E0440043E043404000000
-          00FFFFFFFFFFFFFFFF00000000FFFFFFFF000000000621044204400430043D04
-          300400000000FFFFFFFFFFFFFFFF00000000FFFFFFFF000000001013043E0440
-          043E04340420003F0440043E0436043804320430043D0438044F0400000000FF
-          FFFFFFFFFFFFFF00000000FFFFFFFF000000000E1D043E043C04350440042000
-          420435043B04350444043E043D043004}
-        ParentFont = False
-        TabOrder = 1
-        ViewStyle = vsReport
-      end
     end
     object stbsht2: TsTabSheet
       Caption = #1053#1086#1074#1086#1089#1090#1080
@@ -163,12 +123,12 @@ object Form1: TForm1
     ThirdParty.ThirdScrollBar = ' '
     ThirdParty.ThirdStaticText = ' '
     ThirdParty.ThirdNativePaint = ' '
-    Left = 568
-    Top = 128
+    Left = 696
+    Top = 528
   end
   object mm1: TMainMenu
-    Left = 620
-    Top = 72
+    Left = 548
+    Top = 304
     object F1: TMenuItem
       Caption = #1040#1082#1082#1072#1091#1085#1090
       object N3: TMenuItem
@@ -215,8 +175,8 @@ object Form1: TForm1
     Request.Ranges.Units = 'bytes'
     Request.Ranges = <>
     HTTPOptions = [hoForceEncodeParams]
-    Left = 572
-    Top = 72
+    Left = 580
+    Top = 232
   end
   object idslhndlrscktpnsl1: TIdSSLIOHandlerSocketOpenSSL
     MaxLineAction = maException
@@ -225,7 +185,7 @@ object Form1: TForm1
     SSLOptions.Mode = sslmUnassigned
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0
-    Left = 620
-    Top = 128
+    Left = 676
+    Top = 240
   end
 end
