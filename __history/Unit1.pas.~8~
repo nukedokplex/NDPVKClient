@@ -119,7 +119,7 @@ begin
  profileInfoCaller:=CreateCaller('https://api.vk.com/method/account.getProfileInfo?access_token='+token+'&v='+v, tpLower) ;
  profileInfoCaller.OnHaltProc:=OnGetProfileInfo;
  profileInfoCaller.Start;
-end;
+end;                            //0c3196d6dca40668e5acb320e656d8b010797193c10a4a824b8efe35b1413c350f3a41d9a961c384b43ff
 
 procedure TForm1.btn1Click(Sender: TObject);
 begin
