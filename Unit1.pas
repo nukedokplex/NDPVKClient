@@ -42,6 +42,7 @@ type
     lv1: TsListView;
     procedure btn1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure N3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -77,22 +78,18 @@ Form1.lbl4.Visible:=False;
   jsap:=jsob.Get('response');
   jsar:=jsap.JsonValue as TJSONArray;
   jsob:=jsar.Items[0] as TJSONObject;
-  jsap:=jsob.Get('has_photo');
-  if jsap.JsonValue.Value = '1' then begin
-      try
+
+
+
       jsap:=jsob.Get('photo_200');
       stream:=TMemoryStream.Create;
       Form1.idhtp1.Get(jsap.JsonValue.Value, stream);
       stream.SaveToFile(ExtractFileDir(Application.ExeName)+'/photo_cache/avatar_'+uid+'.jpg');
       stream.Free;
       Form1.img1.Picture.LoadFromFile(ExtractFileDir(Application.ExeName)+'/photo_cache/avatar_'+uid+'.jpg');
-      except
-        ShowMessage('Не получилось загрузить аватар, попробуйте еще раз...');
-      end;
-  end
-  else begin
-     Form1.lbl4.Visible:=True;
-  end;
+      
+
+
 end;
 procedure OnGetProfileInfo(response:string);
 var
@@ -113,25 +110,7 @@ begin
   jsap:=jsob.Get('status');
   Form1.lbl3.Caption:=jsap.JsonValue.Value;
   jsap:=jsob.Get('sex');
-  //x:=jsap.JsonValue.Value ;
-  case x of
-  '0':Form1.lv1.Items[0].SubItems.Add('Не указано');
-  '1':Form1.lv1.Items[0].SubItems.Add('Женский');
-  '2':Form1.lv1.Items[0].SubItems.Add('Мужской');
-  end;
-  jsap:=jsob.Get('relation');
- // x:=jsap.JsonValue.Value ;
-  case x of
-  '0':Form1.lv1.Items[1].SubItems.Add('Не указано');
-  '1':Form1.lv1.Items[1].SubItems.Add('Не женат/Не замужем');
-  '2':Form1.lv1.Items[1].SubItems.Add('Есть друг/Есть подруга');
-  '3':Form1.lv1.Items[1].SubItems.Add('Помолвлен/Помолвлена');
-  '4':Form1.lv1.Items[1].SubItems.Add('Женат/Замужем');
-  '5':Form1.lv1.Items[1].SubItems.Add('Всё сложно');
-  '6':Form1.lv1.Items[1].SubItems.Add('В активном поиске');
-  '7':Form1.lv1.Items[1].SubItems.Add('Влюблён/Влюблена');
-  '8':Form1.lv1.Items[1].SubItems.Add('В гражданском браке');
-  end;
+
 
   avatarCaller:=CreateCaller('https://api.vk.com/method/users.get?access_token='+token+'&user_ids='+uid+'&fields=photo_200,has_photo&v='+v+'&name_case=nom', tpLower);
   avatarCaller.OnHaltProc:=OnGetAvatar;
@@ -156,6 +135,12 @@ begin
   uid:=fini.ReadString('account', 'user_id', 'no_uid');
   if DirectoryExists(ExtractFileDir(Application.ExeName)+'/photo_cache')=false then
   CreateDir(ExtractFileDir(Application.ExeName)+'/photo_cache');
+end;
+
+procedure TForm1.N3Click(Sender: TObject);
+begin
+form2.Visible:=True;
+form2.wb1.Navigate('https://oauth.vk.com/authorize?client_id='+client_id+'&display=popup&response_type=token&v='+v);
 end;
 
 end.

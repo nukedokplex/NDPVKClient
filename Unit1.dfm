@@ -27,8 +27,6 @@ object Form1: TForm1
     TabOrder = 0
     object stbsht1: TsTabSheet
       Caption = #1055#1088#1086#1092#1080#1083#1100
-      ExplicitLeft = 8
-      ExplicitTop = 28
       object img1: TsImage
         Left = 0
         Top = 0
@@ -173,6 +171,7 @@ object Form1: TForm1
       Caption = #1040#1082#1082#1072#1091#1085#1090
       object N3: TMenuItem
         Caption = #1042#1086#1081#1090#1080
+        OnClick = N3Click
       end
       object N4: TMenuItem
         Caption = #1042#1099#1081#1090#1080
