@@ -40,6 +40,7 @@ type
     idhtp1: TIdHTTP;
     idslhndlrscktpnsl1: TIdSSLIOHandlerSocketOpenSSL;
     lv1: TsListView;
+    lbl5: TsLabel;
     procedure btn1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure N3Click(Sender: TObject);
@@ -55,6 +56,7 @@ var
   fini:TIniFile;
   profileInfoCaller:caller;
   avatarCaller:caller;
+
 
 implementation
 
@@ -87,7 +89,7 @@ Form1.lbl4.Visible:=False;
       stream.SaveToFile(ExtractFileDir(Application.ExeName)+'/photo_cache/avatar_'+uid+'.jpg');
       stream.Free;
       Form1.img1.Picture.LoadFromFile(ExtractFileDir(Application.ExeName)+'/photo_cache/avatar_'+uid+'.jpg');
-      
+
 
 
 end;
@@ -107,6 +109,8 @@ begin
   Form1.lbl1.Caption:=Form1.lbl1.Caption+' '+jsap.JsonValue.Value;
   jsap:=jsob.Get('screen_name');
   Form1.lbl2.Caption:=jsap.JsonValue.Value;
+  uid:=jsap.JsonValue.Value;
+  fini.WriteString('account', 'user_id', jsap.JsonValue.Value);
   jsap:=jsob.Get('status');
   Form1.lbl3.Caption:=jsap.JsonValue.Value;
   jsap:=jsob.Get('sex');

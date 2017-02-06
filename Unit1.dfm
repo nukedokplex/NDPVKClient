@@ -22,7 +22,7 @@ object Form1: TForm1
     Top = 0
     Width = 810
     Height = 633
-    ActivePage = stbsht1
+    ActivePage = stbsht2
     Align = alClient
     TabOrder = 0
     object stbsht1: TsTabSheet
@@ -78,6 +78,12 @@ object Form1: TForm1
         Font.Height = -19
         Font.Name = 'Tahoma'
         Font.Style = []
+      end
+      object lbl5: TsLabel
+        Left = 3
+        Top = 199
+        Width = 3
+        Height = 13
       end
       object btn1: TsButton
         Left = 724

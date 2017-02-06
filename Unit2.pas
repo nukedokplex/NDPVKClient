@@ -45,9 +45,11 @@ begin
 edt1.Text:=URL;
 if Copy(url, 1, 45) = 'https://oauth.vk.com/blank.html#access_token=' then begin
   token:=Copy(url, 46, 85) ;
-   a:=Pos('&user_id=',url)+9;
+   a:=Pos('&user_id=',url)+8;
    b:=Pos('&email=',url);
+   ShowMessage(a.ToString(a));
   uid:=Copy(url, a, b-a);
+  ShowMessage(uid);
   a:=Pos('&email=',url)+7;
   email:=Copy(url, a, length(url)-a+1);
   fini.WriteString('account', 'token', token);
