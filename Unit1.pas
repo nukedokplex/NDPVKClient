@@ -8,7 +8,7 @@ uses
   Vcl.Menus, Vcl.StdCtrls, sLabel, Vcl.ExtCtrls, acImage, Unit2, System.IniFiles, Unit3, System.JSON,
   sButton, IdIOHandler, IdIOHandlerSocket, IdIOHandlerStack, IdSSL,
   IdSSLOpenSSL, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
-  IdHTTP, sListView;
+  IdHTTP, sListView, Vcl.OleCtrls, SHDocVw, cefvcl;
 const
   client_id='5850365';
   v='5.62';
@@ -41,6 +41,7 @@ type
     idslhndlrscktpnsl1: TIdSSLIOHandlerSocketOpenSSL;
     lv1: TsListView;
     lbl5: TsLabel;
+    chrm1: TChromium;
     procedure btn1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure N3Click(Sender: TObject);

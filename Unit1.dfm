@@ -135,6 +135,19 @@ object Form1: TForm1
     end
     object stbsht2: TsTabSheet
       Caption = #1053#1086#1074#1086#1089#1090#1080
+      object chrm1: TChromium
+        Left = 0
+        Top = 0
+        Width = 802
+        Height = 605
+        Align = alClient
+        DefaultUrl = 'http://2ip.ru/'
+        TabOrder = 0
+        ExplicitLeft = 56
+        ExplicitTop = 72
+        ExplicitWidth = 100
+        ExplicitHeight = 41
+      end
     end
     object stbsht3: TsTabSheet
       Caption = #1057#1086#1086#1073#1097#1077#1085#1080#1103
