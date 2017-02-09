@@ -42,6 +42,9 @@ type
     lv1: TsListView;
     lbl5: TsLabel;
     chrm1: TChromium;
+    btn2: TsButton;
+    btn3: TsButton;
+    btn4: TsButton;
     procedure btn1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure N3Click(Sender: TObject);
@@ -99,7 +102,9 @@ var
   jsob:TJSONObject;
   jsap:TJSONPair;
   jsar:TJSONArray;
+  jsob_partner:TJSONObject;
   x:string;
+  i:Integer;
 begin
   jsob:=TJSONObject(TJSONObject.ParseJSONValue(response));
   jsap:=jsob.Get('response');
@@ -115,8 +120,35 @@ begin
   jsap:=jsob.Get('status');
   Form1.lbl3.Caption:=jsap.JsonValue.Value;
   jsap:=jsob.Get('sex');
-
-
+  if jsap.JsonValue.Value='0' then Form1.lv1.Items[0].SubItems.Add('Не указан');
+  if jsap.JsonValue.Value='1' then Form1.lv1.Items[0].SubItems.Add('Женский');
+  if jsap.JsonValue.Value='2' then Form1.lv1.Items[0].SubItems.Add('Мужкской');  jsap:=jsob.Get('relation');
+  if jsap.JsonValue.Value='0' then Form1.lv1.Items[1].SubItems.Add('Не указано');
+  if jsap.JsonValue.Value='1' then Form1.lv1.Items[1].SubItems.Add('Не в браке');
+  if jsap.JsonValue.Value='2' then Form1.lv1.Items[1].SubItems.Add('Встречается');
+  if jsap.JsonValue.Value='3' then Form1.lv1.Items[1].SubItems.Add('Помолвлен(а)');
+  if jsap.JsonValue.Value='4' then Form1.lv1.Items[1].SubItems.Add('Женат/Замужем');
+  if jsap.JsonValue.Value='5' then Form1.lv1.Items[1].SubItems.Add('Все сложно');
+  if jsap.JsonValue.Value='6' then Form1.lv1.Items[1].SubItems.Add('В активном поиске');
+  if jsap.JsonValue.Value='7' then Form1.lv1.Items[1].SubItems.Add('Влюблен(а)');
+  if jsap.JsonValue.Value='8' then Form1.lv1.Items[1].SubItems.Add('В гр. браке'); jsap:=jsob.Get('relation_partner');
+  jsob_partner:=jsap.JsonValue as TJSONObject;
+  jsap:=jsob_partner.Get('first_name');
+  Form1.lv1.Items[2].SubItems.Add(jsap.JsonValue.Value);
+  jsap:=jsob_partner.Get('last_name');
+  Form1.lv1.Items[2].SubItems[0]:=Form1.lv1.Items[2].SubItems[0]+' '+jsap.JsonValue.Value;
+  jsap:=jsob.Get('bdate');
+  Form1.lv1.Items[3].SubItems.Add(jsap.JsonValue.Value);
+  jsap:=jsob.Get('home_town');
+  Form1.lv1.Items[4].SubItems.Add(jsap.JsonValue.Value);
+  jsap:=jsob.Get('country');
+  jsob_partner:=jsap.JsonValue as TJSONObject;
+  jsap:=jsob_partner.Get('title');
+  form1.lv1.Items[5].SubItems.Add(jsap.JsonValue.value);
+  jsap:=jsob.Get('city');
+  jsob_partner:=jsap.JsonValue as TJSONObject;
+  jsap:=jsob_partner.Get('title');
+  form1.lv1.Items[6].SubItems.Add(jsap.JsonValue.value);
   avatarCaller:=CreateCaller('https://api.vk.com/method/users.get?access_token='+token+'&user_ids='+uid+'&fields=photo_200,has_photo&v='+v+'&name_case=nom', tpLower);
   avatarCaller.OnHaltProc:=OnGetAvatar;
   avatarCaller.Start
