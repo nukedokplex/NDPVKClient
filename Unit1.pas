@@ -8,7 +8,7 @@ uses
   Vcl.Menus, Vcl.StdCtrls, sLabel, Vcl.ExtCtrls, acImage, Unit2, System.IniFiles, Unit3, System.JSON,
   sButton, IdIOHandler, IdIOHandlerSocket, IdIOHandlerStack, IdSSL,
   IdSSLOpenSSL, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
-  IdHTTP, sListView, Vcl.OleCtrls, SHDocVw, cefvcl;
+  IdHTTP, sListView, Vcl.OleCtrls, SHDocVw, cefvcl, Unit4, Unit5, sMemo;
 const
   client_id='5850365';
   v='5.62';
@@ -41,13 +41,19 @@ type
     idslhndlrscktpnsl1: TIdSSLIOHandlerSocketOpenSSL;
     lv1: TsListView;
     lbl5: TsLabel;
-    chrm1: TChromium;
     btn2: TsButton;
     btn3: TsButton;
     btn4: TsButton;
+    btn5: TsButton;
+    mmo1: TsMemo;
+    mmo2: TsMemo;
+    tmr1: TTimer;
     procedure btn1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure N3Click(Sender: TObject);
+    procedure btn5Click(Sender: TObject);
+    procedure N6Click(Sender: TObject);
+    procedure tmr1Timer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,7 +66,7 @@ var
   fini:TIniFile;
   profileInfoCaller:caller;
   avatarCaller:caller;
-
+  albumsCaller:caller;
 
 implementation
 
@@ -106,6 +112,9 @@ var
   x:string;
   i:Integer;
 begin
+for i := 0 to 7 do begin
+Form1.lv1.Items[i].SubItems.Clear;
+end;
   jsob:=TJSONObject(TJSONObject.ParseJSONValue(response));
   jsap:=jsob.Get('response');
   jsob:=jsap.JsonValue as TJSONObject;
@@ -131,12 +140,18 @@ begin
   if jsap.JsonValue.Value='5' then Form1.lv1.Items[1].SubItems.Add('Все сложно');
   if jsap.JsonValue.Value='6' then Form1.lv1.Items[1].SubItems.Add('В активном поиске');
   if jsap.JsonValue.Value='7' then Form1.lv1.Items[1].SubItems.Add('Влюблен(а)');
-  if jsap.JsonValue.Value='8' then Form1.lv1.Items[1].SubItems.Add('В гр. браке'); jsap:=jsob.Get('relation_partner');
+  if jsap.JsonValue.Value='8' then Form1.lv1.Items[1].SubItems.Add('В гр. браке');
+  try
+  jsap:=jsob.Get('relation_partner');
+
   jsob_partner:=jsap.JsonValue as TJSONObject;
   jsap:=jsob_partner.Get('first_name');
   Form1.lv1.Items[2].SubItems.Add(jsap.JsonValue.Value);
   jsap:=jsob_partner.Get('last_name');
   Form1.lv1.Items[2].SubItems[0]:=Form1.lv1.Items[2].SubItems[0]+' '+jsap.JsonValue.Value;
+  except
+   Form1.lv1.Items[2].SubItems.Add(' - ');
+  end;
   jsap:=jsob.Get('bdate');
   Form1.lv1.Items[3].SubItems.Add(jsap.JsonValue.Value);
   jsap:=jsob.Get('home_town');
@@ -149,6 +164,9 @@ begin
   jsob_partner:=jsap.JsonValue as TJSONObject;
   jsap:=jsob_partner.Get('title');
   form1.lv1.Items[6].SubItems.Add(jsap.JsonValue.value);
+  jsap:=jsob.Get('phone');
+  Form1.lv1.Items[7].SubItems.Add(jsap.JsonValue.Value);
+
   avatarCaller:=CreateCaller('https://api.vk.com/method/users.get?access_token='+token+'&user_ids='+uid+'&fields=photo_200,has_photo&v='+v+'&name_case=nom', tpLower);
   avatarCaller.OnHaltProc:=OnGetAvatar;
   avatarCaller.Start
@@ -165,6 +183,40 @@ begin
 onlogin;
 end;
 
+procedure onAlbumsGet(response:string);
+var
+  jsap:TJSONPair;
+  jsob:TJSONObject;
+  jsar:TJSONArray;
+  I:Integer;
+  x:string;
+begin
+   jsob:=TJSONObject(TJSONObject.ParseJSONValue(response));
+   jsap:=jsob.Get('response');
+   jsob:=jsap.JsonValue as TJSONObject;
+   jsap:=jsob.Get('items') ;
+   jsar:=jsap.JsonValue as TJSONArray;
+   ShowMessage('1');
+   for i:= 0 to jsar.Count-1 do begin
+     jsob:=jsar.Items[i] as TJSONObject;
+     jsap:=jsob.Get('title');
+     x:=jsap.JsonValue.Value;
+     jsap:=jsob.Get('size');
+     x:=x+jsap.JsonValue.Value;
+     Form4.lv1.Items.Add.Caption:=x;
+     jsap:=jsob.Get('id');
+     Form4.lv1.Items[i].SubItems.Add(jsap.JsonValue.Value);
+   end;
+   Form4.Show;
+end;
+
+procedure TForm1.btn5Click(Sender: TObject);
+begin
+  albumsCaller:= CreateCaller('https://api.vk.com/method/photos.getAlbums?access_token='+token+'&v='+v+'&owner_id='+uid+'&need_system=1&need_cover=0',tpLower);
+  albumsCaller.OnHaltProc:=onAlbumsGet;
+  albumsCaller.Start;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   fini:=TIniFile.Create(ExtractFileDir(Application.ExeName)+'/account_details.ini');
@@ -178,6 +230,18 @@ procedure TForm1.N3Click(Sender: TObject);
 begin
 form2.Visible:=True;
 form2.wb1.Navigate('https://oauth.vk.com/authorize?client_id='+client_id+'&display=popup&response_type=token&v='+v);
+end;
+
+procedure TForm1.N6Click(Sender: TObject);
+begin
+Form5.Show;
+end;
+
+procedure TForm1.tmr1Timer(Sender: TObject);
+begin
+Sleep(1000);
+onlogin;
+tmr1.Enabled:=False;
 end;
 
 end.
