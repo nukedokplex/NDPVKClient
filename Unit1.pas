@@ -45,15 +45,16 @@ type
     btn3: TsButton;
     btn4: TsButton;
     btn5: TsButton;
-    mmo1: TsMemo;
     mmo2: TsMemo;
     tmr1: TTimer;
+    chrm1: TChromium;
     procedure btn1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure N3Click(Sender: TObject);
     procedure btn5Click(Sender: TObject);
     procedure N6Click(Sender: TObject);
     procedure tmr1Timer(Sender: TObject);
+    procedure btn2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,7 +68,7 @@ var
   profileInfoCaller:caller;
   avatarCaller:caller;
   albumsCaller:caller;
-
+  newsCaller:caller;
 implementation
 
 {$R *.dfm}
@@ -208,6 +209,30 @@ begin
      Form4.lv1.Items[i].SubItems.Add(jsap.JsonValue.Value);
    end;
    Form4.Show;
+end;
+
+procedure onGetNews(response:string);
+var
+  jsob:TJSONObject;
+  jsap:TJSONPair;
+  jsar:TJSONArray;
+  i:Integer;
+begin
+   jsob:=TJSONObject(TJSONObject.ParseJSONValue(response));
+   jsap:=jsob.Get('response');
+   jsob:=jsap.JsonValue as TJSONObject;
+   jsap:=jsob.Get('items');
+   jsar:=jsap.JsonValue as TJSONArray;
+   for I := 0 to jsar.Count-1 do begin
+
+   end;
+
+end;
+procedure TForm1.btn2Click(Sender: TObject);
+begin
+  newsCaller:=CreateCaller('https://api.vk.com/method/newsfeed.get?access_token='+token+'&v='+v+'&count=50'+'&filters=post', tpLower);
+  newsCaller.OnHaltProc:=onGetNews;
+  newsCaller.Start;
 end;
 
 procedure TForm1.btn5Click(Sender: TObject);
